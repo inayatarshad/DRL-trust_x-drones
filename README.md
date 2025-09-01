@@ -1,1 +1,4 @@
-# DRL-trust_x-drones
+# DRL TrustX Drones
+
+
+Unmanned aerial vehicles (UAVs) have progressed from narrowly scoped platforms to versatile agents that operate in cluttered, dynamic environments for inspection, disaster response, and reconnaissance. This expansion has been accelerated by deep reinforcement learning (DRL), which optimizes goal-directed behaviors from interaction and enables robust navigation and decision-making under uncertainty. Yet the very features that make DRL effective—adaptivity and autonomy—can reduce operator trust due to the "black-box" nature of learned policies. To address this, we introduce TrustX, a framework that integrates explainable AI into DRL-controlled UAVs. TrustX provides real-time explanations of UAV decisions, enhancing transparency, reducing operator interventions, and improving mission success rates. Our results show a 94% mission success rate, a 28% increase in operator trust, and 37% fewer manual interventions, proving that UAVs can be both high-performing and explainable.
