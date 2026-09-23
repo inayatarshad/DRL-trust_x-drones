@@ -16,6 +16,10 @@ absolute step-to-step change of the commanded velocity. Fidelity: held-out R²
 | TD3 | 0.5 | final | 14.0 | 42.5 | 0.06 | 0.82 |
 | PPO (released) | – | final | 82.0 | 7.0 | 0.12 | 0.85 |
 
+Jitter for the two released policies was measured on noise-free rollouts; for the
+sweep rows, on rollouts with 0.1 exploration noise, so treat small jitter differences
+between the two groups with care.
+
 Takeaways
 
 * Smoothness makes TD3 far easier to explain (R² 0.38 → 0.8) but, with this
