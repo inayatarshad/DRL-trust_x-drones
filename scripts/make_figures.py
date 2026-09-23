@@ -73,7 +73,7 @@ def fig2_explanation(explainer, env, out):
         if term or trunc:
             obs, _ = env.reset(seed=4243)
     e = explainer.explain(obs, level="detailed")
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4.2), gridspec_kw={"width_ratios": [1.2, 1, 1]})
+    fig, axes = plt.subplots(1, 3, figsize=(16, 4.2), gridspec_kw={"width_ratios": [1.2, 1, 1], "wspace": 0.55})
     ax = axes[0]
     ax.axis("off")
     ax.set_title("Surrogate rule", loc="left", fontweight="bold")
