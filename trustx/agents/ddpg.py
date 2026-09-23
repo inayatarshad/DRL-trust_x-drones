@@ -18,6 +18,7 @@ class DDPGAgent(Agent):
     def __init__(self, obs_dim: int, act_dim: int, hidden=(256, 256), actor_lr=1e-4, critic_lr=1e-3,
                  gamma=0.99, tau=0.005, exploration_noise=0.1, device="cpu"):
         super().__init__(obs_dim, act_dim, device)
+        self.hidden = tuple(hidden)
         self.actor = Actor(obs_dim, act_dim, hidden).to(self.device)
         self.actor_target = copy.deepcopy(self.actor)
         self.critic = Critic(obs_dim, act_dim, hidden).to(self.device)

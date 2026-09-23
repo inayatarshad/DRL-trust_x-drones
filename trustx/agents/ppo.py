@@ -42,6 +42,7 @@ class PPOAgent(Agent):
                  clip=0.2, epochs=10, minibatch=256, entropy_coef=0.0, value_coef=0.5,
                  init_log_std=-0.5, rollout_steps=2048, device="cpu"):
         super().__init__(obs_dim, act_dim, device)
+        self.hidden = tuple(hidden)
         self.actor = Actor(obs_dim, act_dim, hidden).to(self.device)
         self.log_std = nn.Parameter(torch.full((act_dim,), init_log_std, device=self.device))
         self.value = mlp(obs_dim, 1, hidden, act=nn.Tanh).to(self.device)

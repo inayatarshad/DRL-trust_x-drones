@@ -19,6 +19,7 @@ class TD3Agent(Agent):
                  gamma=0.99, tau=0.005, policy_noise=0.2, noise_clip=0.5, policy_delay=2,
                  exploration_noise=0.1, device="cpu"):
         super().__init__(obs_dim, act_dim, device)
+        self.hidden = tuple(hidden)
         self.actor = Actor(obs_dim, act_dim, hidden).to(self.device)
         self.actor_target = copy.deepcopy(self.actor)
         self.critic1 = Critic(obs_dim, act_dim, hidden).to(self.device)

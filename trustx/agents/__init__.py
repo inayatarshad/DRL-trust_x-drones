@@ -19,6 +19,7 @@ def load_agent(path: str, **kwargs) -> Agent:
     import torch
 
     blob = torch.load(path, map_location="cpu", weights_only=False)
+    kwargs.setdefault("hidden", tuple(blob.get("hidden", (256, 256))))
     agent = build_agent(blob["name"], blob["obs_dim"], blob["act_dim"], **kwargs)
     agent.load_state_dict(blob["state"])
     return agent

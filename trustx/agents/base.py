@@ -56,7 +56,7 @@ class Agent(ABC):
     def save(self, path: str | Path) -> None:
         Path(path).parent.mkdir(parents=True, exist_ok=True)
         torch.save({"name": self.name, "obs_dim": self.obs_dim, "act_dim": self.act_dim,
-                    "state": self.state_dict()}, path)
+                    "hidden": list(getattr(self, "hidden", (256, 256))), "state": self.state_dict()}, path)
 
     def load(self, path: str | Path) -> "Agent":
         blob = torch.load(path, map_location=self.device, weights_only=False)
