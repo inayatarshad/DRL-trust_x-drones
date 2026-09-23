@@ -66,11 +66,14 @@ def main(argv: list[str] | None = None) -> None:
 
     autonomous = {}
     seeds = list(range(90_000, 90_000 + args.autonomous_missions))
-    for m in methods:
-        if m.name in ("TD3", "PPO", "DDPG"):
-            autonomous[m.name] = evaluate_autonomous(env, m.agent, seeds)
-            print(f"autonomous {m.name}: success={autonomous[m.name]['success_rate']:.1%} "
-                  f"crash={autonomous[m.name]['crash_rate']:.1%}", flush=True)
+    policies = {m.name: m.agent for m in methods if m.name in ("TD3", "PPO", "DDPG")}
+    extra = Path(args.checkpoints) / "td3_nosmooth" / "model.pt"
+    if extra.exists():  # TD3 trained without the smoothness regulariser, for reference
+        policies["TD3 (no smoothing)"] = load_agent(str(extra))
+    for name, agent in policies.items():
+        autonomous[name] = evaluate_autonomous(env, agent, seeds)
+        print(f"autonomous {name}: success={autonomous[name]['success_rate']:.1%} "
+              f"crash={autonomous[name]['crash_rate']:.1%}", flush=True)
 
     results = []
     for m in methods:
