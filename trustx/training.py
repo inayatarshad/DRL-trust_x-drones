@@ -23,7 +23,7 @@ def train(cfg: dict, out_dir: str | Path) -> Agent:
     env = make_env(cfg.get("env"))
     obs_dim, act_dim = env.observation_space.shape[0], env.action_space.shape[0]
     agent = build_agent(cfg["algo"], obs_dim, act_dim, **cfg.get("agent", {}))
-    tcfg = cfg.get("train", {})
+    tcfg = dict(cfg.get("train", {}), _out_dir=str(out_dir))
     with CSVLogger(out_dir / "train_log.csv", LOG_FIELDS, echo_every=tcfg.get("log_every", 10)) as log:
         if isinstance(agent, PPOAgent):
             _train_on_policy(agent, env, tcfg, seed, log)
@@ -31,6 +31,12 @@ def train(cfg: dict, out_dir: str | Path) -> Agent:
             _train_off_policy(agent, env, tcfg, seed, log)
     agent.save(out_dir / "model.pt")
     return agent
+
+
+def _maybe_checkpoint(agent: Agent, tcfg: dict, ep: int) -> None:
+    every, out = int(tcfg.get("checkpoint_every", 0)), tcfg.get("_out_dir")
+    if every and out and (ep + 1) % every == 0:
+        agent.save(Path(out) / f"model_ep{ep + 1}.pt")
 
 
 def _train_off_policy(agent: Agent, env, tcfg: dict, seed: int, log: CSVLogger) -> None:
@@ -55,6 +61,7 @@ def _train_off_policy(agent: Agent, env, tcfg: dict, seed: int, log: CSVLogger) 
             if steps >= warmup:
                 agent.update(buffer, batch)
         log.log(_row(ep, steps, ep_ret, env, info, t0))
+        _maybe_checkpoint(agent, tcfg, ep)
 
 
 def _train_on_policy(agent: PPOAgent, env, tcfg: dict, seed: int, log: CSVLogger) -> None:
@@ -76,6 +83,7 @@ def _train_on_policy(agent: PPOAgent, env, tcfg: dict, seed: int, log: CSVLogger
             if len(agent.rollout) >= agent.rollout_steps:
                 agent.update(obs, done)
         log.log(_row(ep, steps, ep_ret, env, info, t0))
+        _maybe_checkpoint(agent, tcfg, ep)
 
 
 def _row(ep, steps, ep_ret, env, info, t0) -> dict:
