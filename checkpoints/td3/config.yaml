@@ -1,0 +1,54 @@
+algo: td3
+seed: 0
+env:
+  size:
+  - 100.0
+  - 100.0
+  - 50.0
+  dt: 0.5
+  max_steps: 250
+  max_speed: 5.0
+  sensor_range: 20.0
+  safety_margin: 3.0
+  goal_radius: 3.0
+  n_obstacles:
+  - 10
+  - 20
+  obstacle_radius:
+  - 2.0
+  - 6.0
+  obstacle_height:
+  - 15.0
+  - 45.0
+  wind_speed:
+  - 0.0
+  - 15.0
+  visibility:
+  - 0.3
+  - 1.0
+  sensor_noise: 0.05
+  n_waypoints: 1
+  proximity_penalty: -0.5
+  goal_reward: 100.0
+  crash_penalty: -100.0
+agent:
+  hidden:
+  - 256
+  - 256
+  actor_lr: 0.0003
+  critic_lr: 0.0003
+  gamma: 0.99
+  tau: 0.005
+  policy_noise: 0.2
+  noise_clip: 0.5
+  policy_delay: 2
+  exploration_noise: 0.1
+train:
+  episodes: 800
+  warmup_steps: 10000
+  warmup_policy: fallback
+  warmup_noise: 0.3
+  checkpoint_every: 100
+  threads: 2
+  batch_size: 256
+  log_every: 50
