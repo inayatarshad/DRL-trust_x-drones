@@ -104,9 +104,9 @@ class PPOAgent(Agent):
                 loss.backward()
                 nn.utils.clip_grad_norm_(self.opt.param_groups[0]["params"], 0.5)
                 self.opt.step()
-                stats["policy_loss"] += float(policy_loss)
-                stats["value_loss"] += float(value_loss)
-                stats["entropy"] += float(entropy)
+                stats["policy_loss"] += policy_loss.item()
+                stats["value_loss"] += value_loss.item()
+                stats["entropy"] += entropy.item()
                 count += 1
         self.rollout.clear()
         return {k: v / max(count, 1) for k, v in stats.items()}

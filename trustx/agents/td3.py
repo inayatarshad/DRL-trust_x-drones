@@ -54,7 +54,7 @@ class TD3Agent(Agent):
         critic_loss.backward()
         self.critic_opt.step()
 
-        info = {"critic_loss": float(critic_loss), "q_mean": float(q1.mean())}
+        info = {"critic_loss": critic_loss.item(), "q_mean": q1.mean().item()}
         self.total_updates += 1
         if self.total_updates % self.policy_delay == 0:
             # Eq. (3): deterministic policy gradient through Q_phi1
@@ -65,7 +65,7 @@ class TD3Agent(Agent):
             soft_update(self.actor_target, self.actor, self.tau)
             soft_update(self.critic1_target, self.critic1, self.tau)
             soft_update(self.critic2_target, self.critic2, self.tau)
-            info["actor_loss"] = float(actor_loss)
+            info["actor_loss"] = actor_loss.item()
         return info
 
     @torch.no_grad()

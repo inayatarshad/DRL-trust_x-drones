@@ -1,0 +1,15 @@
+algo: ppo
+seed: 0
+env: !include env.yaml
+agent:
+  hidden: [256, 256]
+  lr: 3.0e-4
+  gamma: 0.99
+  lam: 0.95
+  clip: 0.2
+  epochs: 10
+  minibatch: 256
+  rollout_steps: 2048
+train:
+  episodes: 1500
+  log_every: 25

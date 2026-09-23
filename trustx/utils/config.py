@@ -9,13 +9,29 @@ from typing import Any
 import yaml
 
 
+class _IncludeLoader(yaml.SafeLoader):
+    """SafeLoader with an ``!include other.yaml`` tag resolved relative to the file."""
+
+    def __init__(self, stream):
+        self._root = Path(getattr(stream, "name", ".")).resolve().parent
+        super().__init__(stream)
+
+
+def _include(loader: _IncludeLoader, node: yaml.Node) -> Any:
+    with open(loader._root / loader.construct_scalar(node), "r", encoding="utf-8") as f:
+        return yaml.load(f, _IncludeLoader)
+
+
+_IncludeLoader.add_constructor("!include", _include)
+
+
 def load_config(path: str | Path, overrides: dict[str, Any] | None = None) -> dict[str, Any]:
     """Load a YAML config, optionally merging dotted-key overrides.
 
     >>> load_config("configs/td3.yaml", {"train.episodes": 10})  # doctest: +SKIP
     """
     with open(path, "r", encoding="utf-8") as f:
-        cfg = yaml.safe_load(f) or {}
+        cfg = yaml.load(f, _IncludeLoader) or {}
     for dotted, value in (overrides or {}).items():
         set_dotted(cfg, dotted, value)
     return cfg

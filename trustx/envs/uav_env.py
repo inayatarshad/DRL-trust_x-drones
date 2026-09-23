@@ -104,7 +104,7 @@ class UAVNavigationEnv(gym.Env):
             rng.uniform(*c.obstacle_height, n),
         ])  # columns: x, y, radius, height
 
-        self.pos = self._free_point(np.array([5.0, 5.0, 3.0]), np.array([20.0, 20.0, 12.0]))
+        self.pos = self._free_point(np.array([5.0, 5.0, 8.0]), np.array([20.0, 20.0, 15.0]))
         self.waypoints = [
             self._free_point(np.array([self._size[0] - 25, self._size[1] - 25, 5.0]),
                              np.array([self._size[0] - 5, self._size[1] - 5, 35.0]))

@@ -46,7 +46,7 @@ class DDPGAgent(Agent):
         self.actor_opt.step()
         soft_update(self.actor_target, self.actor, self.tau)
         soft_update(self.critic_target, self.critic, self.tau)
-        return {"critic_loss": float(critic_loss), "actor_loss": float(actor_loss), "q_mean": float(q.mean())}
+        return {"critic_loss": critic_loss.item(), "actor_loss": actor_loss.item(), "q_mean": q.mean().item()}
 
     @torch.no_grad()
     def q_values(self, obs, action):
