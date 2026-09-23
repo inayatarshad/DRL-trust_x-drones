@@ -26,7 +26,7 @@ def main(argv=None):
     ap.add_argument("--profile", choices=list(PROFILES), default="balanced")
     ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--every", type=int, default=6, help="print an explanation every N steps")
-    ap.add_argument("--surrogate-samples", type=int, default=5000)
+    ap.add_argument("--surrogate-samples", type=int, default=10_000)
     args = ap.parse_args(argv)
 
     env = make_env(load_config(args.env_config))

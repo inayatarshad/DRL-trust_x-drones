@@ -18,14 +18,14 @@ Explanations are generated in milliseconds. A *Bayesian trust model* reads the o
 or confidence drops.
 
 ```
---- t= 12.0s  pos=[41.3 37.9 22.4]  dist= 58.1 m  level=detailed  latency=9.8 ms
-Action: CLIMB (confidence 91%)
-Rule: IF range_front <= 0.31 AND range_nearest > 0.12 AND goal_dz <= 0.08 THEN CLIMB
-Key factors: range_front (+0.41), goal_dz (-0.12), range_left (+0.07)
-Contrast: If range_front were 6.2m higher, the UAV would advance instead of climb.
-Operator tag: Trusted  ->  estimated trust 0.61 (true 0.58)
+--- t=  6.0s  pos=[26.6 39.6 30.1]  dist= 73.1 m  level=detailed  latency=12.2 ms
+Action: ADVANCE (confidence 70%)
+Rule: IF vel_y > 0.49 AND battery > 0.95 AND range_front <= 0.66 AND ... THEN ADVANCE
+Key factors: vel_y (+0.25), range_front (-0.19), battery (+0.16)
+Contrast: If range_front were 9.3m higher and goal_dz were 22.4m higher, the UAV would veer left instead of advance.
+Operator tag: Trusted  ->  estimated trust 0.58 (true 0.44)
 ```
-<sub>Illustrative console output of `scripts/explain_demo.py`. Run it to see your model's explanations.</sub>
+<sub>Real output of `python -m scripts.explain_demo --profile skeptical` with the released TD3 checkpoint (one step, rule shortened).</sub>
 
 ---
 
@@ -105,7 +105,7 @@ print(explanation.text())
 ## Reproducing the experiments
 
 ```bash
-# 1. train the policies (CPU is fine; roughly 20-40 min each)
+# 1. train the policies (CPU only; roughly 15-45 min each)
 python -m scripts.train --config configs/td3.yaml
 python -m scripts.train --config configs/ddpg.yaml
 python -m scripts.train --config configs/ppo.yaml
@@ -121,7 +121,66 @@ Any config value can be overridden from the command line, for example `train.epi
 
 ## Results
 
-RESULTS_PLACEHOLDER
+All numbers below come from `python -m scripts.evaluate --operators 20 --missions 50`. They are stored in
+[`results/table1.md`](results/table1.md) and [`results/evaluation.json`](results/evaluation.json). Every method
+flies the **same 1,000 missions** in front of the **same 20 simulated operators** (skeptical, balanced and
+optimistic profiles), so the comparisons are paired.
+
+### Table I: human-in-the-loop comparison
+
+| Method | Success (%) | Missions with intervention (%) | Interventions / mission | Operator trust Δ (pp) | Clarity* (1–5) | Latency mean / p95 (ms) |
+|---|---|---|---|---|---|---|
+| TD3 (black box) | **89.0** | 87.3 | 2.42 | −40.7 | 2.00 | – |
+| PPO (black box) | 88.4 | 71.9 | 1.79 | −30.0 | 2.00 | – |
+| DDPG (black box) | 7.1 | 90.0 | 3.79 | −43.5 | 2.00 | – |
+| **TRUST-X** (TD3 backbone) | 77.7 | 6.4 | 0.14 | +27.1 | 4.57 | 12.2 / 43.5 |
+| **TRUST-X** (PPO backbone) | 81.5 | **2.7** | **0.05** | **+34.8** | **4.81** | 6.8 / 13.8 |
+
+<sub>*Clarity is a simulated rating derived from explanation quality. A black box scores 2.0 by construction.
+Policy-only success with no operator in the loop: TD3 83.2%, PPO 82.8%, DDPG 2.0% (500 missions).</sub>
+
+### Ablations (TRUST-X, TD3 backbone)
+
+| Variant | Success (%) | Interventions / mission | Trust Δ (pp) | Latency mean (ms) |
+|---|---|---|---|---|
+| Full TRUST-X | 77.7 | 0.14 | +27.1 | 12.2 |
+| w/o contrastive explanations (CEM) | 80.4 | 0.70 | +15.0 | 2.6 |
+| w/o SHAP-lite | 80.5 | 0.77 | +15.8 | 11.1 |
+| w/o adaptive granularity | 77.1 | 0.12 | +29.4 | 11.9 |
+| w/o safe mode | 81.1 | 0.18 | +26.5 | 11.0 |
+
+### What the results show, including what did not work
+
+* **Interventions drop by about 94% and trust rises instead of falling.** With TRUST-X, operators take manual
+  control in 6% of missions instead of 87%, and their trust goes up by 27 pp instead of down by 41 pp.
+  Removing either CEM or SHAP-lite roughly halves the trust gain and multiplies interventions by about 5.
+  Both explanation types matter in this model, which matches the paper's ablation finding for CEM.
+* **Real-time budget is met.** The mean explanation latency is 12 ms, and the 95th percentile is 43.5 ms,
+  under the 50 ms budget, on a laptop CPU.
+* **Mission success is *lower* with TRUST-X (77.7% vs 89.0%)**, which is the opposite of the paper's claim. Two
+  effects explain it. Black-box baselines are frequently rescued by operator overrides (the fallback controller
+  is a decent pilot). TRUST-X's safe mode also slows the drone whenever estimated uncertainty exceeds 0.3,
+  which happens too often (see Fig. 7); removing safe mode recovers 3.4 pp. Calibrating the uncertainty
+  threshold is the obvious next step.
+* **Surrogate fidelity depends on the policy.** A depth-8 tree reaches R² = **0.85** on the PPO policy but only
+  **0.38** on TD3, whose commands are jittery. Smoothness-regularised TD3 raises fidelity to about 0.8 but costs
+  most of its mission success ([`results/smoothness_tradeoff.md`](results/smoothness_tradeoff.md)). The paper's
+  91% fidelity is not reproduced for TD3.
+* **Adaptive granularity has no measurable effect** in this operator model (77.1% vs 77.7%, p = 0.52).
+* SHAP-lite often ranks `battery` highly. The policy uses state of charge as a proxy for elapsed mission time,
+  which is exactly the kind of shortcut these explanations exist to expose.
+
+### Figures
+
+| | |
+|---|---|
+| ![explanation](results/figures/fig2_explanation.png) | ![trajectories](results/figures/fig4_comparative_trajectories.png) |
+| **Fig. 2** Rule, SHAP-lite attribution and counterfactual for one decision | **Fig. 4** Same mission flown by every method |
+| ![learning](results/figures/fig5_learning_curves.png) | ![trust](results/figures/fig8_trust_evolution.png) |
+| **Fig. 5** Learning curves. Early off-policy success comes from demonstration warm-up | **Fig. 8** Operator trust over 50 missions per profile |
+| ![confidence](results/figures/fig6_confidence.png) | ![uncertainty](results/figures/fig7_uncertainty.png) |
+| **Fig. 6** Decision confidence by flight mode, and latency. Gaps are manual overrides | **Fig. 7** Aleatoric vs. epistemic uncertainty |
+
 
 ## Repository layout
 
@@ -153,7 +212,8 @@ paper's text, and each one is documented in [`docs/architecture.md`](docs/archit
   clarity numbers therefore show how the closed loop behaves under those assumptions. They are **not** evidence
   about real people.
 * **Numbers are measured, not copied.** Every number in the Results section is produced by the code in this
-  repository and can be regenerated with the commands above. Expect them to differ from Table I of the paper.
+  repository and can be regenerated with the commands above. They differ from Table I of the paper. In
+  particular, mission success and TD3 surrogate fidelity are lower than reported there (see above).
 * **Observation design.** Obstacle distances are range-finder readings relative to the heading, and the goal is
   a tanh-scaled direction vector. This makes the navigation task learnable within a CPU budget.
 * **Demonstration-seeded warm-up.** TD3 and DDPG fill their replay buffer with noisy demonstrations from a
