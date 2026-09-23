@@ -1,0 +1,1523 @@
+{
+  "setup": {
+    "operators": 20,
+    "missions_per_operator": 50,
+    "surrogate_samples": 10000,
+    "surrogate_fidelity": {
+      "TD3": 0.38046215877277245,
+      "PPO": 0.8539067552330134
+    }
+  },
+  "methods": [
+    {
+      "method": "TD3",
+      "missions": 1000,
+      "success_rate": 0.89,
+      "success_ci": [
+        0.8706068919458484,
+        0.9093931080541516
+      ],
+      "crash_rate": 0.076,
+      "missions_with_intervention": 0.873,
+      "interventions_per_mission": 2.425,
+      "trust_delta": -0.4070697550869231,
+      "trust_final": 0.12190120050478288,
+      "clarity": 2.0,
+      "latency_ms_mean": null,
+      "latency_ms_p95": null,
+      "operators": [
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4062865110546697,
+          "trust_end": 0.0,
+          "interventions_per_mission": 2.18,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5820211325221641,
+          "trust_end": 0.05369103840106601,
+          "interventions_per_mission": 2.36,
+          "success_rate": 0.8
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6732165313419444,
+          "trust_end": 0.11139665780561814,
+          "interventions_per_mission": 2.18,
+          "success_rate": 0.88
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4652000022565069,
+          "trust_end": 0.08597976628671018,
+          "interventions_per_mission": 2.72,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5148132382096504,
+          "trust_end": 0.11680139554476317,
+          "interventions_per_mission": 2.3,
+          "success_rate": 0.92
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6688362768731323,
+          "trust_end": 0.2286110809869528,
+          "interventions_per_mission": 2.0,
+          "success_rate": 0.94
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.2837484612680583,
+          "trust_end": 0.028831085576883263,
+          "interventions_per_mission": 2.72,
+          "success_rate": 0.9
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.4877044526373468,
+          "trust_end": 0.03982722718469628,
+          "interventions_per_mission": 2.76,
+          "success_rate": 0.92
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6727870508571344,
+          "trust_end": 0.404610597615296,
+          "interventions_per_mission": 1.92,
+          "success_rate": 0.92
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.42058152681870664,
+          "trust_end": 0.0695441281527523,
+          "interventions_per_mission": 2.44,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5435732668527984,
+          "trust_end": 0.01889030457421231,
+          "interventions_per_mission": 2.78,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6667402663256693,
+          "trust_end": 0.18437212883450937,
+          "interventions_per_mission": 2.3,
+          "success_rate": 0.92
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.44517350908259046,
+          "trust_end": 0.009678175074775738,
+          "interventions_per_mission": 2.66,
+          "success_rate": 0.9
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5128250375323096,
+          "trust_end": 0.049539739408887645,
+          "interventions_per_mission": 3.0,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.677113708716633,
+          "trust_end": 0.39932648632504497,
+          "interventions_per_mission": 1.84,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.3495190908230632,
+          "trust_end": 0.0,
+          "interventions_per_mission": 3.0,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5420387495042761,
+          "trust_end": 0.1221074584623399,
+          "interventions_per_mission": 2.36,
+          "success_rate": 0.96
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.710732956125317,
+          "trust_end": 0.2767490080522217,
+          "interventions_per_mission": 2.08,
+          "success_rate": 0.94
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.36730856952908303,
+          "trust_end": 0.0,
+          "interventions_per_mission": 2.72,
+          "success_rate": 0.88
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5891987735030665,
+          "trust_end": 0.23806773180892774,
+          "interventions_per_mission": 2.18,
+          "success_rate": 0.9
+        }
+      ]
+    },
+    {
+      "method": "PPO",
+      "missions": 1000,
+      "success_rate": 0.884,
+      "success_ci": [
+        0.864152253770264,
+        0.9038477462297361
+      ],
+      "crash_rate": 0.071,
+      "missions_with_intervention": 0.719,
+      "interventions_per_mission": 1.788,
+      "trust_delta": -0.2996267055865409,
+      "trust_final": 0.22934425000516506,
+      "clarity": 2.0,
+      "latency_ms_mean": null,
+      "latency_ms_p95": null,
+      "operators": [
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4062865110546697,
+          "trust_end": 0.06571536932788206,
+          "interventions_per_mission": 1.78,
+          "success_rate": 0.9
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5820211325221641,
+          "trust_end": 0.19716691149696308,
+          "interventions_per_mission": 1.7,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6732165313419444,
+          "trust_end": 0.44243131511936856,
+          "interventions_per_mission": 1.28,
+          "success_rate": 0.88
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4652000022565069,
+          "trust_end": 0.2581821784336657,
+          "interventions_per_mission": 2.32,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5148132382096504,
+          "trust_end": 0.11006565223864197,
+          "interventions_per_mission": 1.7,
+          "success_rate": 0.92
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6688362768731323,
+          "trust_end": 0.5262776155616428,
+          "interventions_per_mission": 1.6,
+          "success_rate": 0.96
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.2837484612680583,
+          "trust_end": 0.024946418393368353,
+          "interventions_per_mission": 2.42,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.4877044526373468,
+          "trust_end": 0.11892358233177734,
+          "interventions_per_mission": 1.92,
+          "success_rate": 0.78
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6727870508571344,
+          "trust_end": 0.49072017313303745,
+          "interventions_per_mission": 1.14,
+          "success_rate": 0.94
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.42058152681870664,
+          "trust_end": 0.09405163553547675,
+          "interventions_per_mission": 2.24,
+          "success_rate": 0.92
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5435732668527984,
+          "trust_end": 0.23036118780428155,
+          "interventions_per_mission": 2.0,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6667402663256693,
+          "trust_end": 0.16284789509676867,
+          "interventions_per_mission": 1.4,
+          "success_rate": 0.88
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.44517350908259046,
+          "trust_end": 0.27271487069076494,
+          "interventions_per_mission": 2.08,
+          "success_rate": 0.92
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5128250375323096,
+          "trust_end": 0.1955438522758126,
+          "interventions_per_mission": 1.96,
+          "success_rate": 0.88
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.677113708716633,
+          "trust_end": 0.22075924298679078,
+          "interventions_per_mission": 1.16,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.3495190908230632,
+          "trust_end": 0.11157095761532407,
+          "interventions_per_mission": 2.28,
+          "success_rate": 0.88
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5420387495042761,
+          "trust_end": 0.3855346712863104,
+          "interventions_per_mission": 1.5,
+          "success_rate": 0.96
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.710732956125317,
+          "trust_end": 0.420123713958121,
+          "interventions_per_mission": 1.02,
+          "success_rate": 0.9
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.36730856952908303,
+          "trust_end": 0.02340047250143,
+          "interventions_per_mission": 2.34,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5891987735030665,
+          "trust_end": 0.2355472843158737,
+          "interventions_per_mission": 1.92,
+          "success_rate": 0.86
+        }
+      ]
+    },
+    {
+      "method": "DDPG",
+      "missions": 1000,
+      "success_rate": 0.071,
+      "success_ci": [
+        0.05508183131135996,
+        0.08691816868864002
+      ],
+      "crash_rate": 0.203,
+      "missions_with_intervention": 0.9,
+      "interventions_per_mission": 3.794,
+      "trust_delta": -0.43540226706088453,
+      "trust_final": 0.09356868853082151,
+      "clarity": 2.0,
+      "latency_ms_mean": null,
+      "latency_ms_p95": null,
+      "operators": [
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4062865110546697,
+          "trust_end": 0.03524122113115791,
+          "interventions_per_mission": 4.16,
+          "success_rate": 0.08
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5820211325221641,
+          "trust_end": 0.15654671277577484,
+          "interventions_per_mission": 3.92,
+          "success_rate": 0.04
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6732165313419444,
+          "trust_end": 0.1371191942677899,
+          "interventions_per_mission": 3.8,
+          "success_rate": 0.06
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4652000022565069,
+          "trust_end": 0.0,
+          "interventions_per_mission": 3.88,
+          "success_rate": 0.06
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5148132382096504,
+          "trust_end": 0.0592797796820595,
+          "interventions_per_mission": 2.98,
+          "success_rate": 0.04
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6688362768731323,
+          "trust_end": 0.3102071069545888,
+          "interventions_per_mission": 2.36,
+          "success_rate": 0.08
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.2837484612680583,
+          "trust_end": 0.005707843547532093,
+          "interventions_per_mission": 3.52,
+          "success_rate": 0.08
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.4877044526373468,
+          "trust_end": 0.0493471018843772,
+          "interventions_per_mission": 4.34,
+          "success_rate": 0.14
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6727870508571344,
+          "trust_end": 0.046652401998722226,
+          "interventions_per_mission": 3.14,
+          "success_rate": 0.06
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.42058152681870664,
+          "trust_end": 0.0,
+          "interventions_per_mission": 4.92,
+          "success_rate": 0.06
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5435732668527984,
+          "trust_end": 0.0,
+          "interventions_per_mission": 5.3,
+          "success_rate": 0.1
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6667402663256693,
+          "trust_end": 0.1105025527607676,
+          "interventions_per_mission": 3.12,
+          "success_rate": 0.06
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.44517350908259046,
+          "trust_end": 0.0,
+          "interventions_per_mission": 4.64,
+          "success_rate": 0.06
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5128250375323096,
+          "trust_end": 0.0490622906121555,
+          "interventions_per_mission": 3.7,
+          "success_rate": 0.06
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.677113708716633,
+          "trust_end": 0.13344192164409108,
+          "interventions_per_mission": 3.54,
+          "success_rate": 0.06
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.3495190908230632,
+          "trust_end": 0.007379203758407605,
+          "interventions_per_mission": 4.44,
+          "success_rate": 0.1
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5420387495042761,
+          "trust_end": 0.4061267900373434,
+          "interventions_per_mission": 3.16,
+          "success_rate": 0.04
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.710732956125317,
+          "trust_end": 0.23500565942262722,
+          "interventions_per_mission": 3.18,
+          "success_rate": 0.06
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.36730856952908303,
+          "trust_end": 0.0,
+          "interventions_per_mission": 4.58,
+          "success_rate": 0.1
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5891987735030665,
+          "trust_end": 0.1297539901390349,
+          "interventions_per_mission": 3.2,
+          "success_rate": 0.08
+        }
+      ]
+    },
+    {
+      "method": "TRUST-X",
+      "missions": 1000,
+      "success_rate": 0.777,
+      "success_ci": [
+        0.7512000412093353,
+        0.8027999587906648
+      ],
+      "crash_rate": 0.071,
+      "missions_with_intervention": 0.064,
+      "interventions_per_mission": 0.141,
+      "trust_delta": 0.2714855043683791,
+      "trust_final": 0.8004564599600853,
+      "clarity": 4.57074853115911,
+      "latency_ms_mean": 12.22683375311532,
+      "latency_ms_p95": 43.52528003510087,
+      "operators": [
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4062865110546697,
+          "trust_end": 0.7400952705522126,
+          "interventions_per_mission": 0.4,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5820211325221641,
+          "trust_end": 0.9302591077637014,
+          "interventions_per_mission": 0.06,
+          "success_rate": 0.62
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6732165313419444,
+          "trust_end": 0.977473803284969,
+          "interventions_per_mission": 0.02,
+          "success_rate": 0.76
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4652000022565069,
+          "trust_end": 0.918007825344399,
+          "interventions_per_mission": 0.12,
+          "success_rate": 0.82
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5148132382096504,
+          "trust_end": 0.4615100328222674,
+          "interventions_per_mission": 0.16,
+          "success_rate": 0.88
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6688362768731323,
+          "trust_end": 0.9555047309768859,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.88
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.2837484612680583,
+          "trust_end": 0.5034629481964266,
+          "interventions_per_mission": 0.18,
+          "success_rate": 0.72
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.4877044526373468,
+          "trust_end": 0.8392120685157477,
+          "interventions_per_mission": 0.04,
+          "success_rate": 0.78
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6727870508571344,
+          "trust_end": 1.0,
+          "interventions_per_mission": 0.04,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.42058152681870664,
+          "trust_end": 0.7056104548377616,
+          "interventions_per_mission": 0.38,
+          "success_rate": 0.78
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5435732668527984,
+          "trust_end": 0.796855488134298,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.66
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6667402663256693,
+          "trust_end": 0.9131191900911644,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.76
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.44517350908259046,
+          "trust_end": 0.6851770653415875,
+          "interventions_per_mission": 0.38,
+          "success_rate": 0.76
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5128250375323096,
+          "trust_end": 0.7467957572690677,
+          "interventions_per_mission": 0.08,
+          "success_rate": 0.66
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.677113708716633,
+          "trust_end": 0.9085584351546889,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.68
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.3495190908230632,
+          "trust_end": 0.5547501910236077,
+          "interventions_per_mission": 0.44,
+          "success_rate": 0.82
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5420387495042761,
+          "trust_end": 0.8472539863719143,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.710732956125317,
+          "trust_end": 0.8901866391305391,
+          "interventions_per_mission": 0.04,
+          "success_rate": 0.8
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.36730856952908303,
+          "trust_end": 0.6723734321886057,
+          "interventions_per_mission": 0.46,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5891987735030665,
+          "trust_end": 0.9629227722018592,
+          "interventions_per_mission": 0.02,
+          "success_rate": 0.78
+        }
+      ]
+    },
+    {
+      "method": "TRUST-X (PPO backbone)",
+      "missions": 1000,
+      "success_rate": 0.815,
+      "success_ci": [
+        0.7909330674991597,
+        0.8390669325008402
+      ],
+      "crash_rate": 0.064,
+      "missions_with_intervention": 0.027,
+      "interventions_per_mission": 0.051,
+      "trust_delta": 0.3476562675756557,
+      "trust_final": 0.8766272231673616,
+      "clarity": 4.812432463092266,
+      "latency_ms_mean": 6.757695367129306,
+      "latency_ms_p95": 13.804714981233696,
+      "operators": [
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4062865110546697,
+          "trust_end": 0.9607744801474211,
+          "interventions_per_mission": 0.06,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5820211325221641,
+          "trust_end": 0.81826725807136,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.8
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6732165313419444,
+          "trust_end": 0.9737148867612255,
+          "interventions_per_mission": 0.04,
+          "success_rate": 0.76
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4652000022565069,
+          "trust_end": 0.7494995677500893,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.82
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5148132382096504,
+          "trust_end": 0.9241891864383599,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.8
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6688362768731323,
+          "trust_end": 0.8167814814310346,
+          "interventions_per_mission": 0.1,
+          "success_rate": 0.92
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.2837484612680583,
+          "trust_end": 0.9170092654348343,
+          "interventions_per_mission": 0.06,
+          "success_rate": 0.78
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.4877044526373468,
+          "trust_end": 0.9508654796744628,
+          "interventions_per_mission": 0.02,
+          "success_rate": 0.74
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6727870508571344,
+          "trust_end": 0.925262490869938,
+          "interventions_per_mission": 0.04,
+          "success_rate": 0.78
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.42058152681870664,
+          "trust_end": 0.8226617133587136,
+          "interventions_per_mission": 0.14,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5435732668527984,
+          "trust_end": 0.8117603356053453,
+          "interventions_per_mission": 0.04,
+          "success_rate": 0.8
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6667402663256693,
+          "trust_end": 0.7863154247122843,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.82
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.44517350908259046,
+          "trust_end": 0.7680628568182984,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.8
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5128250375323096,
+          "trust_end": 0.8720405664343049,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.677113708716633,
+          "trust_end": 1.0,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.3495190908230632,
+          "trust_end": 0.7029932245894379,
+          "interventions_per_mission": 0.34,
+          "success_rate": 0.82
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5420387495042761,
+          "trust_end": 0.9504102660275122,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.9
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.710732956125317,
+          "trust_end": 0.8704704974515621,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.36730856952908303,
+          "trust_end": 0.9598420360955265,
+          "interventions_per_mission": 0.18,
+          "success_rate": 0.74
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5891987735030665,
+          "trust_end": 0.9516234456755239,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.78
+        }
+      ]
+    },
+    {
+      "method": "TRUST-X w/o CEM",
+      "missions": 1000,
+      "success_rate": 0.804,
+      "success_ci": [
+        0.7793956366796456,
+        0.8286043633203545
+      ],
+      "crash_rate": 0.075,
+      "missions_with_intervention": 0.247,
+      "interventions_per_mission": 0.697,
+      "trust_delta": 0.15022700498747424,
+      "trust_final": 0.6791979605791802,
+      "clarity": 3.868923011526203,
+      "latency_ms_mean": 2.6375645609792393,
+      "latency_ms_p95": 3.8943249674048275,
+      "operators": [
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4062865110546697,
+          "trust_end": 0.2977014962401159,
+          "interventions_per_mission": 1.3,
+          "success_rate": 0.88
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5820211325221641,
+          "trust_end": 0.6394966640243296,
+          "interventions_per_mission": 0.32,
+          "success_rate": 0.64
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6732165313419444,
+          "trust_end": 0.9092822759237826,
+          "interventions_per_mission": 0.14,
+          "success_rate": 0.8
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4652000022565069,
+          "trust_end": 0.6801539544953082,
+          "interventions_per_mission": 0.72,
+          "success_rate": 0.82
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5148132382096504,
+          "trust_end": 0.3823571413036336,
+          "interventions_per_mission": 0.84,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6688362768731323,
+          "trust_end": 0.9098329780102093,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.82
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.2837484612680583,
+          "trust_end": 0.5036386846198639,
+          "interventions_per_mission": 1.54,
+          "success_rate": 0.82
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.4877044526373468,
+          "trust_end": 0.6861690155447994,
+          "interventions_per_mission": 0.82,
+          "success_rate": 0.82
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6727870508571344,
+          "trust_end": 0.9673814448687338,
+          "interventions_per_mission": 0.1,
+          "success_rate": 0.8
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.42058152681870664,
+          "trust_end": 0.44817634841394677,
+          "interventions_per_mission": 1.56,
+          "success_rate": 0.88
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5435732668527984,
+          "trust_end": 0.7501129644555617,
+          "interventions_per_mission": 0.1,
+          "success_rate": 0.74
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6667402663256693,
+          "trust_end": 0.8136986715096413,
+          "interventions_per_mission": 0.02,
+          "success_rate": 0.74
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.44517350908259046,
+          "trust_end": 0.3643214140053379,
+          "interventions_per_mission": 1.8,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5128250375323096,
+          "trust_end": 0.567929911784706,
+          "interventions_per_mission": 0.72,
+          "success_rate": 0.72
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.677113708716633,
+          "trust_end": 0.8747792771711146,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.7
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.3495190908230632,
+          "trust_end": 0.4836405198413573,
+          "interventions_per_mission": 1.78,
+          "success_rate": 0.88
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5420387495042761,
+          "trust_end": 0.9303027842138909,
+          "interventions_per_mission": 0.02,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.710732956125317,
+          "trust_end": 1.0,
+          "interventions_per_mission": 0.02,
+          "success_rate": 0.8
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.36730856952908303,
+          "trust_end": 0.5535580579598086,
+          "interventions_per_mission": 1.92,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5891987735030665,
+          "trust_end": 0.8214256071974634,
+          "interventions_per_mission": 0.22,
+          "success_rate": 0.8
+        }
+      ]
+    },
+    {
+      "method": "TRUST-X w/o SHAP-lite",
+      "missions": 1000,
+      "success_rate": 0.805,
+      "success_ci": [
+        0.7804432257818744,
+        0.8295567742181257
+      ],
+      "crash_rate": 0.072,
+      "missions_with_intervention": 0.29,
+      "interventions_per_mission": 0.773,
+      "trust_delta": 0.15783773809469737,
+      "trust_final": 0.6868086936864035,
+      "clarity": 3.7787988104694246,
+      "latency_ms_mean": 11.1463104136843,
+      "latency_ms_p95": 44.26365002291277,
+      "operators": [
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4062865110546697,
+          "trust_end": 0.48579558977324044,
+          "interventions_per_mission": 1.48,
+          "success_rate": 0.9
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5820211325221641,
+          "trust_end": 0.7902950546276724,
+          "interventions_per_mission": 0.56,
+          "success_rate": 0.74
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6732165313419444,
+          "trust_end": 0.8242267308810275,
+          "interventions_per_mission": 0.16,
+          "success_rate": 0.78
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4652000022565069,
+          "trust_end": 0.6093165750071585,
+          "interventions_per_mission": 1.26,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5148132382096504,
+          "trust_end": 0.5065524766487498,
+          "interventions_per_mission": 0.58,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6688362768731323,
+          "trust_end": 0.914905184991104,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.2837484612680583,
+          "trust_end": 0.38483675499016445,
+          "interventions_per_mission": 2.18,
+          "success_rate": 0.88
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.4877044526373468,
+          "trust_end": 0.7259684805887536,
+          "interventions_per_mission": 0.84,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6727870508571344,
+          "trust_end": 0.9319382631875756,
+          "interventions_per_mission": 0.06,
+          "success_rate": 0.82
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.42058152681870664,
+          "trust_end": 0.5415312180945859,
+          "interventions_per_mission": 1.5,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5435732668527984,
+          "trust_end": 0.728086783558879,
+          "interventions_per_mission": 0.22,
+          "success_rate": 0.74
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6667402663256693,
+          "trust_end": 0.8066846327806204,
+          "interventions_per_mission": 0.02,
+          "success_rate": 0.68
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.44517350908259046,
+          "trust_end": 0.4770719615607948,
+          "interventions_per_mission": 1.94,
+          "success_rate": 0.8
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5128250375323096,
+          "trust_end": 0.6383985738007392,
+          "interventions_per_mission": 0.34,
+          "success_rate": 0.72
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.677113708716633,
+          "trust_end": 0.7995749261173655,
+          "interventions_per_mission": 0.06,
+          "success_rate": 0.72
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.3495190908230632,
+          "trust_end": 0.3930722591593843,
+          "interventions_per_mission": 1.6,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5420387495042761,
+          "trust_end": 0.8868763990721051,
+          "interventions_per_mission": 0.14,
+          "success_rate": 0.88
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.710732956125317,
+          "trust_end": 0.8946213658209241,
+          "interventions_per_mission": 0.04,
+          "success_rate": 0.8
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.36730856952908303,
+          "trust_end": 0.4910874678978569,
+          "interventions_per_mission": 2.32,
+          "success_rate": 0.82
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5891987735030665,
+          "trust_end": 0.905333175169366,
+          "interventions_per_mission": 0.16,
+          "success_rate": 0.76
+        }
+      ]
+    },
+    {
+      "method": "TRUST-X w/o adaptive granularity",
+      "missions": 1000,
+      "success_rate": 0.771,
+      "success_ci": [
+        0.7449564008938857,
+        0.7970435991061143
+      ],
+      "crash_rate": 0.07,
+      "missions_with_intervention": 0.056,
+      "interventions_per_mission": 0.125,
+      "trust_delta": 0.2941500600809215,
+      "trust_final": 0.8231210156726275,
+      "clarity": 4.574740566877006,
+      "latency_ms_mean": 11.89703277680465,
+      "latency_ms_p95": 45.36709500243886,
+      "operators": [
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4062865110546697,
+          "trust_end": 0.6412167206218566,
+          "interventions_per_mission": 0.34,
+          "success_rate": 0.82
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5820211325221641,
+          "trust_end": 0.8799701116858292,
+          "interventions_per_mission": 0.12,
+          "success_rate": 0.66
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6732165313419444,
+          "trust_end": 0.9532608476598466,
+          "interventions_per_mission": 0.1,
+          "success_rate": 0.78
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4652000022565069,
+          "trust_end": 0.8033615966859137,
+          "interventions_per_mission": 0.1,
+          "success_rate": 0.76
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5148132382096504,
+          "trust_end": 0.667442102354654,
+          "interventions_per_mission": 0.06,
+          "success_rate": 0.78
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6688362768731323,
+          "trust_end": 1.0,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.2837484612680583,
+          "trust_end": 0.5907545351424845,
+          "interventions_per_mission": 0.1,
+          "success_rate": 0.78
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.4877044526373468,
+          "trust_end": 0.8755108761375588,
+          "interventions_per_mission": 0.02,
+          "success_rate": 0.8
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6727870508571344,
+          "trust_end": 0.9967792132799445,
+          "interventions_per_mission": 0.04,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.42058152681870664,
+          "trust_end": 0.8476367825578961,
+          "interventions_per_mission": 0.24,
+          "success_rate": 0.76
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5435732668527984,
+          "trust_end": 0.8267973005295112,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.68
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6667402663256693,
+          "trust_end": 0.9696855394246269,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.72
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.44517350908259046,
+          "trust_end": 0.5508995542514135,
+          "interventions_per_mission": 0.38,
+          "success_rate": 0.8
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5128250375323096,
+          "trust_end": 0.6513539731694713,
+          "interventions_per_mission": 0.08,
+          "success_rate": 0.66
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.677113708716633,
+          "trust_end": 0.8599010033964154,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.68
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.3495190908230632,
+          "trust_end": 0.737456355800954,
+          "interventions_per_mission": 0.48,
+          "success_rate": 0.82
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5420387495042761,
+          "trust_end": 1.0,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.710732956125317,
+          "trust_end": 0.9710299483678142,
+          "interventions_per_mission": 0.02,
+          "success_rate": 0.78
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.36730856952908303,
+          "trust_end": 0.6857121546592454,
+          "interventions_per_mission": 0.38,
+          "success_rate": 0.82
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5891987735030665,
+          "trust_end": 0.953651697727115,
+          "interventions_per_mission": 0.04,
+          "success_rate": 0.78
+        }
+      ]
+    },
+    {
+      "method": "TRUST-X w/o safe mode",
+      "missions": 1000,
+      "success_rate": 0.811,
+      "success_ci": [
+        0.7867340442924661,
+        0.835265955707534
+      ],
+      "crash_rate": 0.073,
+      "missions_with_intervention": 0.085,
+      "interventions_per_mission": 0.183,
+      "trust_delta": 0.26490813202999486,
+      "trust_final": 0.7938790876217009,
+      "clarity": 4.5183458017139895,
+      "latency_ms_mean": 11.007076872025898,
+      "latency_ms_p95": 41.87793999444693,
+      "operators": [
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4062865110546697,
+          "trust_end": 0.6468247507563821,
+          "interventions_per_mission": 0.44,
+          "success_rate": 0.82
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5820211325221641,
+          "trust_end": 0.8507443357891442,
+          "interventions_per_mission": 0.08,
+          "success_rate": 0.74
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6732165313419444,
+          "trust_end": 0.9233622762270265,
+          "interventions_per_mission": 0.06,
+          "success_rate": 0.78
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.4652000022565069,
+          "trust_end": 0.780802985385311,
+          "interventions_per_mission": 0.28,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5148132382096504,
+          "trust_end": 0.5670270631769405,
+          "interventions_per_mission": 0.14,
+          "success_rate": 0.82
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6688362768731323,
+          "trust_end": 0.978093825712155,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.2837484612680583,
+          "trust_end": 0.5704686204134087,
+          "interventions_per_mission": 0.34,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.4877044526373468,
+          "trust_end": 0.9369586162752231,
+          "interventions_per_mission": 0.2,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6727870508571344,
+          "trust_end": 0.9410009269266084,
+          "interventions_per_mission": 0.08,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.42058152681870664,
+          "trust_end": 0.6516283774105072,
+          "interventions_per_mission": 0.28,
+          "success_rate": 0.78
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5435732668527984,
+          "trust_end": 0.7906411822870115,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.66
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.6667402663256693,
+          "trust_end": 0.9355057074539981,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.84
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.44517350908259046,
+          "trust_end": 0.5202848956584242,
+          "interventions_per_mission": 0.3,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5128250375323096,
+          "trust_end": 0.8362564908423877,
+          "interventions_per_mission": 0.1,
+          "success_rate": 0.74
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.677113708716633,
+          "trust_end": 1.0,
+          "interventions_per_mission": 0.04,
+          "success_rate": 0.78
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.3495190908230632,
+          "trust_end": 0.39390793018456954,
+          "interventions_per_mission": 0.64,
+          "success_rate": 0.86
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5420387495042761,
+          "trust_end": 1.0,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.88
+        },
+        {
+          "profile": "optimistic",
+          "trust_start": 0.710732956125317,
+          "trust_end": 0.8135149432611172,
+          "interventions_per_mission": 0.02,
+          "success_rate": 0.8
+        },
+        {
+          "profile": "skeptical",
+          "trust_start": 0.36730856952908303,
+          "trust_end": 0.7405588246738027,
+          "interventions_per_mission": 0.66,
+          "success_rate": 0.82
+        },
+        {
+          "profile": "balanced",
+          "trust_start": 0.5891987735030665,
+          "trust_end": 1.0,
+          "interventions_per_mission": 0.0,
+          "success_rate": 0.78
+        }
+      ]
+    }
+  ],
+  "significance_vs_trustx": {
+    "TD3": {
+      "mcnemar_chi2": 63.03517587939699,
+      "mcnemar_p": 2.030478163665527e-15,
+      "paired_t": -31.922495692000506,
+      "paired_t_p": 2.8415196192603364e-18
+    },
+    "PPO": {
+      "mcnemar_chi2": 45.12449799196787,
+      "mcnemar_p": 1.8489786851137703e-11,
+      "paired_t": -20.754497999698682,
+      "paired_t_p": 8.113851042837055e-15
+    },
+    "DDPG": {
+      "mcnemar_chi2": 686.4986187845304,
+      "mcnemar_p": 2.580529964332675e-151,
+      "paired_t": -24.41879490393067,
+      "paired_t_p": 4.111119846563509e-16
+    },
+    "TRUST-X (PPO backbone)": {
+      "mcnemar_chi2": 5.3062015503875966,
+      "mcnemar_p": 0.02124963783715003,
+      "paired_t": 3.0879306962964876,
+      "paired_t_p": 0.9969721003486309
+    },
+    "TRUST-X w/o CEM": {
+      "mcnemar_chi2": 8.144578313253012,
+      "mcnemar_p": 0.004319009781788494,
+      "paired_t": -4.504268881438463,
+      "paired_t_p": 0.00012141049931372397
+    },
+    "TRUST-X w/o SHAP-lite": {
+      "mcnemar_chi2": 8.284090909090908,
+      "mcnemar_p": 0.003999392249375002,
+      "paired_t": -4.2980375353459,
+      "paired_t_p": 0.00019405458614100445
+    },
+    "TRUST-X w/o adaptive granularity": {
+      "mcnemar_chi2": 0.4166666666666667,
+      "mcnemar_p": 0.5186050164287255,
+      "paired_t": 1.3411996749355921,
+      "paired_t_p": 0.9021653623606539
+    },
+    "TRUST-X w/o safe mode": {
+      "mcnemar_chi2": 9.075,
+      "mcnemar_p": 0.0025912757605325576,
+      "paired_t": -2.1403719088388655,
+      "paired_t_p": 0.02275566196850698
+    }
+  },
+  "autonomous": {
+    "TD3": {
+      "success_rate": 0.832,
+      "success_ci": [
+        0.7992291751217642,
+        0.8647708248782358
+      ],
+      "crash_rate": 0.056,
+      "mean_steps": 77.28
+    },
+    "PPO": {
+      "success_rate": 0.828,
+      "success_ci": [
+        0.7949211455579247,
+        0.8610788544420752
+      ],
+      "crash_rate": 0.058,
+      "mean_steps": 72.592
+    },
+    "DDPG": {
+      "success_rate": 0.02,
+      "success_ci": [
+        0.007728458939481155,
+        0.03227154106051885
+      ],
+      "crash_rate": 0.292,
+      "mean_steps": 189.906
+    }
+  }
+}
