@@ -13,8 +13,6 @@ import argparse
 import json
 from pathlib import Path
 
-import numpy as np
-
 from trustx.agents import load_agent
 from trustx.envs import make_env
 from trustx.evaluation import EvalConfig, Method, evaluate_autonomous, evaluate_method, mcnemar, paired_t
@@ -24,7 +22,7 @@ from trustx.utils.config import load_config
 from trustx.utils.seeding import set_global_seed
 
 
-def build_methods(ckpt: Path, env, surrogate_samples: int, ablations: bool) -> tuple[list[Method], float]:
+def build_methods(ckpt: Path, env, surrogate_samples: int, ablations: bool) -> tuple[list[Method], dict]:
     agents = {name: load_agent(str(ckpt / name / "model.pt"))
               for name in ("td3", "ppo", "ddpg") if (ckpt / name / "model.pt").exists()}
     if "td3" not in agents:
@@ -32,6 +30,10 @@ def build_methods(ckpt: Path, env, surrogate_samples: int, ablations: bool) -> t
     methods = [Method(name.upper(), agent) for name, agent in agents.items()]
     explainer, fidelity = TrustXExplainer.build(agents["td3"], env, n_samples=surrogate_samples)
     methods.append(Method("TRUST-X", agents["td3"], explainer))
+    fidelities = {"TD3": fidelity}
+    if "ppo" in agents:  # the explanation layer is policy-agnostic
+        ppo_explainer, fidelities["PPO"] = TrustXExplainer.build(agents["ppo"], env, n_samples=surrogate_samples)
+        methods.append(Method("TRUST-X (PPO backbone)", agents["ppo"], ppo_explainer))
     if ablations:
         no_cem = TrustXExplainer(agents["td3"], explainer.surrogate, explainer.shap.background, use_cem=False)
         no_shap = TrustXExplainer(agents["td3"], explainer.surrogate, explainer.shap.background, use_shap=False)
@@ -41,7 +43,7 @@ def build_methods(ckpt: Path, env, surrogate_samples: int, ablations: bool) -> t
             Method("TRUST-X w/o adaptive granularity", agents["td3"], explainer, adaptive=False),
             Method("TRUST-X w/o safe mode", agents["td3"], explainer, safe_mode=False),
         ]
-    return methods, fidelity
+    return methods, fidelities
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -61,15 +63,12 @@ def main(argv: list[str] | None = None) -> None:
     set_global_seed(args.seed)
     env = make_env(load_config(args.env_config))
     methods, fidelity = build_methods(Path(args.checkpoints), env, args.surrogate_samples, not args.no_ablations)
-    print(f"surrogate fidelity (held-out R^2): {fidelity:.3f}")
+    print("surrogate fidelity (held-out R^2):", {k: round(v, 3) for k, v in fidelity.items()})
     operators = make_operator_pool(args.operators, seed=args.seed)
 
     autonomous = {}
     seeds = list(range(90_000, 90_000 + args.autonomous_missions))
     policies = {m.name: m.agent for m in methods if m.name in ("TD3", "PPO", "DDPG")}
-    extra = Path(args.checkpoints) / "td3_nosmooth" / "model.pt"
-    if extra.exists():  # TD3 trained without the smoothness regulariser, for reference
-        policies["TD3 (no smoothing)"] = load_agent(str(extra))
     for name, agent in policies.items():
         autonomous[name] = evaluate_autonomous(env, agent, seeds)
         print(f"autonomous {name}: success={autonomous[name]['success_rate']:.1%} "
@@ -107,7 +106,7 @@ def main(argv: list[str] | None = None) -> None:
     print((out / "table1.md").read_text())
 
 
-def markdown_table(results: list[dict], fidelity: float, tests: dict) -> str:
+def markdown_table(results: list[dict], fidelity: dict, tests: dict) -> str:
     def fmt(v, spec):
         return "-" if v is None else format(v, spec)
 
@@ -124,7 +123,8 @@ def markdown_table(results: list[dict], fidelity: float, tests: dict) -> str:
             f"| {100 * r['missions_with_intervention']:.1f} | {r['interventions_per_mission']:.2f} "
             f"| {100 * r['trust_delta']:+.1f} | {r['clarity']:.2f} | {lat} | {fmt(p, '.3g')} |")
     lines.append("")
-    lines.append(f"Surrogate decision-tree fidelity (held-out R^2, Eq. 19): {fidelity:.3f}")
+    fids = ", ".join(f"{k} policy {v:.3f}" for k, v in fidelity.items())
+    lines.append(f"Surrogate decision-tree fidelity (held-out R^2, Eq. 19): {fids}")
     n = results[0]["missions"]
     lines.append(f"Each method: {n} missions, identical seeds and simulated operators.")
     return "\n".join(lines) + "\n"
