@@ -11,5 +11,6 @@ venv/
 .vscode/
 .idea/
 runs/
-checkpoints/*.pt
+checkpoints/**/model_ep*.pt
+*.log
 !results/

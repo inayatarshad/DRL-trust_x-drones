@@ -12,7 +12,11 @@ agent:
   policy_delay: 2
   exploration_noise: 0.1
 train:
-  episodes: 500
-  warmup_steps: 5000
+  episodes: 800
+  warmup_steps: 10000
+  warmup_policy: fallback   # seed the replay buffer with noisy safe-controller demos
+  warmup_noise: 0.3
+  checkpoint_every: 100
+  threads: 2
   batch_size: 256
   log_every: 10
