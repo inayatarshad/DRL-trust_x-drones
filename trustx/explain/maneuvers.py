@@ -43,12 +43,12 @@ def maneuver_logits(obs, action, temperature: float = 8.0, protos: np.ndarray | 
         p = torch.as_tensor(protos, dtype=action.dtype, device=action.device)
         norm = action.norm(dim=-1, keepdim=True)
         cos = (p * action.unsqueeze(-2)).sum(-1) / (norm + 1e-8)
-        hold = temperature * (1.0 - norm / HOLD_SPEED)
+        hold = temperature * (3.0 - 2.0 * norm / HOLD_SPEED)
         return torch.cat([temperature * cos, hold], dim=-1)
     a = np.asarray(action, dtype=np.float64)
     norm = np.linalg.norm(a, axis=-1, keepdims=True)
     cos = np.einsum("...kd,...d->...k", protos, a) / (norm + 1e-8)
-    return np.concatenate([temperature * cos, temperature * (1.0 - norm / HOLD_SPEED)], axis=-1)
+    return np.concatenate([temperature * cos, temperature * (3.0 - 2.0 * norm / HOLD_SPEED)], axis=-1)
 
 
 def classify(obs: np.ndarray, action: np.ndarray) -> np.ndarray | str:
