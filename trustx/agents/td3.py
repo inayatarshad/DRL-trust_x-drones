@@ -17,7 +17,8 @@ class TD3Agent(Agent):
 
     def __init__(self, obs_dim: int, act_dim: int, hidden=(256, 256), actor_lr=3e-4, critic_lr=3e-4,
                  gamma=0.99, tau=0.005, policy_noise=0.2, noise_clip=0.5, policy_delay=2,
-                 exploration_noise=0.1, device="cpu"):
+                 exploration_noise=0.1, smooth_temporal=0.0, smooth_spatial=0.0, smooth_sigma=0.05,
+                 device="cpu"):
         super().__init__(obs_dim, act_dim, device)
         self.hidden = tuple(hidden)
         self.actor = Actor(obs_dim, act_dim, hidden).to(self.device)
@@ -33,6 +34,9 @@ class TD3Agent(Agent):
         self.policy_noise, self.noise_clip = policy_noise, noise_clip
         self.policy_delay = policy_delay
         self.exploration_noise = exploration_noise
+        # CAPS-style smoothness regularisation (Mysore et al., 2021). Smooth
+        # policies are easier to distil into faithful surrogates and less jerky.
+        self.smooth_temporal, self.smooth_spatial, self.smooth_sigma = smooth_temporal, smooth_spatial, smooth_sigma
         self.total_updates = 0
 
     def _explore(self, action: np.ndarray) -> np.ndarray:
@@ -59,7 +63,15 @@ class TD3Agent(Agent):
         self.total_updates += 1
         if self.total_updates % self.policy_delay == 0:
             # Eq. (3): deterministic policy gradient through Q_phi1
-            actor_loss = -self.critic1(obs, self.actor(obs)).mean()
+            pi = self.actor(obs)
+            q = self.critic1(obs, pi)
+            actor_loss = -q.mean()
+            if self.smooth_temporal or self.smooth_spatial:
+                scale = q.abs().mean().detach()
+                temporal = (pi - self.actor(next_obs)).pow(2).sum(-1).mean()
+                spatial = (pi - self.actor(obs + self.smooth_sigma * torch.randn_like(obs))).pow(2).sum(-1).mean()
+                actor_loss = actor_loss + scale * (self.smooth_temporal * temporal + self.smooth_spatial * spatial)
+                info["smoothness"] = (temporal + spatial).item()
             self.actor_opt.zero_grad()
             actor_loss.backward()
             self.actor_opt.step()

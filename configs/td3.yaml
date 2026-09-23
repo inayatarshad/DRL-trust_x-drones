@@ -11,6 +11,8 @@ agent:
   noise_clip: 0.5
   policy_delay: 2
   exploration_noise: 0.1
+  smooth_temporal: 0.5    # CAPS temporal smoothness, relative to |Q|
+  smooth_spatial: 0.5     # CAPS spatial smoothness under sensor-scale noise
 train:
   episodes: 800
   warmup_steps: 10000

@@ -76,3 +76,10 @@ def test_short_training_run(tmp_path, algo):
     train(cfg, tmp_path)
     assert (tmp_path / "model.pt").exists()
     assert (tmp_path / "train_log.csv").read_text().count("\n") == 4
+
+
+def test_td3_smoothness_regulariser_reports_loss():
+    torch.manual_seed(0)
+    agent = build_agent("td3", OBS, ACT, hidden=(32, 32), smooth_temporal=0.5, smooth_spatial=0.5, policy_delay=1)
+    info = agent.update(_filled_buffer(), batch_size=64)
+    assert info["smoothness"] >= 0
