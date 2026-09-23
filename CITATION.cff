@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the TRUST-X paper."
+title: "TRUST-X: Real-Time Explainable Decision-Making Framework for Reinforcement Learning-Based UAV Control"
+type: software
+license: MIT
+repository-code: "https://github.com/inayatarshad/DRL-trust_x-drones"
+authors:
+  - family-names: Akbar
+    given-names: Hanzala
+  - family-names: Arshad
+    given-names: Inayat
+  - family-names: Rahman
+    given-names: Satwat
+  - family-names: Aamir
+    given-names: Fatima
+  - family-names: Fatima
+    given-names: Marrium
+  - family-names: Khan
+    given-names: Haroon Ur Rashid
+keywords:
+  - explainable AI
+  - deep reinforcement learning
+  - UAV
+  - human-AI trust
