@@ -18,7 +18,7 @@ HOLD_SPEED = 0.25
 _G = [FEATURE_NAMES.index(n) for n in ("goal_dx", "goal_dy")]
 
 
-def _prototypes(obs: np.ndarray) -> np.ndarray:
+def prototypes(obs: np.ndarray) -> np.ndarray:
     """Unit direction for each non-hold manoeuvre, shape (..., 5, 3)."""
     g = np.asarray(obs, dtype=np.float64)[..., _G]
     h = g / (np.linalg.norm(g, axis=-1, keepdims=True) + 1e-8)
@@ -32,9 +32,13 @@ def _prototypes(obs: np.ndarray) -> np.ndarray:
     return np.stack([fwd, vl, vr, up, -up], axis=-2)
 
 
-def maneuver_logits(obs, action, temperature: float = 8.0):
-    """Soft scores over MANEUVERS. Differentiable in ``action`` when it is a tensor."""
-    protos = _prototypes(obs.detach().cpu().numpy() if torch.is_tensor(obs) else obs)
+def maneuver_logits(obs, action, temperature: float = 8.0, protos: np.ndarray | None = None):
+    """Soft scores over MANEUVERS. Differentiable in ``action`` when it is a tensor.
+
+    ``protos`` may be passed to reuse precomputed manoeuvre directions.
+    """
+    if protos is None:
+        protos = prototypes(obs.detach().cpu().numpy() if torch.is_tensor(obs) else obs)
     if torch.is_tensor(action):
         p = torch.as_tensor(protos, dtype=action.dtype, device=action.device)
         norm = action.norm(dim=-1, keepdim=True)
