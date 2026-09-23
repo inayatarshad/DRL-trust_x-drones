@@ -7,7 +7,9 @@ wind disturbances, reduced visibility and a finite battery.
 Observation (18-D, roughly normalised to ``[-1, 1]``)::
 
     pos_x, pos_y, pos_z            UAV position
-    goal_dx, goal_dy, goal_dz      vector to the active waypoint
+    goal_dx, goal_dy, goal_dz      unit vector to the active waypoint scaled by
+                                   tanh(distance / 20 m), so it keeps a clear
+                                   direction far away and shrinks near arrival
     vel_x, vel_y, vel_z            UAV velocity
     range_front, range_left,       horizontal range finders (0 = contact,
     range_right                    1 = nothing within sensor range), aimed
@@ -104,7 +106,7 @@ class UAVNavigationEnv(gym.Env):
             rng.uniform(*c.obstacle_height, n),
         ])  # columns: x, y, radius, height
 
-        self.pos = self._free_point(np.array([5.0, 5.0, 8.0]), np.array([20.0, 20.0, 15.0]))
+        self.pos = self._free_point(np.array([8.0, 8.0, 8.0]), np.array([20.0, 20.0, 15.0]))
         self.waypoints = [
             self._free_point(np.array([self._size[0] - 25, self._size[1] - 25, 5.0]),
                              np.array([self._size[0] - 5, self._size[1] - 5, 35.0]))
@@ -179,7 +181,9 @@ class UAVNavigationEnv(gym.Env):
     def _observe(self) -> np.ndarray:
         c, rng = self.cfg, self.np_random
         half = self._size / 2.0
-        goal = (self.waypoints[self.wp_index] - self.pos) / self._size
+        g = self.waypoints[self.wp_index] - self.pos
+        dist = np.linalg.norm(g)
+        goal = g / (dist + 1e-8) * np.tanh(dist / 20.0)
         noise_scale = c.sensor_noise * (1.0 + (1.0 - self.visibility))
         ranges = np.clip(self._ranges() + rng.normal(0.0, noise_scale, 5), 0.0, 1.0)
         obs = np.concatenate([
