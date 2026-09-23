@@ -218,3 +218,20 @@ def paired_t(baseline: list[float], treatment: list[float]) -> tuple[float, floa
         return 0.0, 1.0
     res = stats.ttest_rel(treatment, baseline, alternative="less")
     return float(res.statistic), float(res.pvalue)
+
+
+def evaluate_autonomous(env, agent, seeds: list[int]) -> dict:
+    """Policy-only benchmark: no operator, no explanations, no overrides."""
+    success, crash, steps = [], [], []
+    for seed in seeds:
+        obs, _ = env.reset(seed=seed)
+        done = False
+        while not done:
+            obs, _, terminated, truncated, info = env.step(agent.act(obs))
+            done = terminated or truncated
+        success.append(info["success"])
+        crash.append(info["crash"])
+        steps.append(env.steps)
+    p = float(np.mean(success))
+    return {"success_rate": p, "success_ci": normal_ci(p, len(seeds)),
+            "crash_rate": float(np.mean(crash)), "mean_steps": float(np.mean(steps))}

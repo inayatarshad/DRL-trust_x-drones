@@ -17,7 +17,7 @@ import numpy as np
 
 from trustx.agents import load_agent
 from trustx.envs import make_env
-from trustx.evaluation import EvalConfig, Method, evaluate_method, mcnemar, paired_t
+from trustx.evaluation import EvalConfig, Method, evaluate_autonomous, evaluate_method, mcnemar, paired_t
 from trustx.framework import TrustXExplainer
 from trustx.trust.operator import make_operator_pool
 from trustx.utils.config import load_config
@@ -52,6 +52,8 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--operators", type=int, default=20, help="paper: 20 operators")
     ap.add_argument("--missions", type=int, default=50, help="missions per operator (paper: 50)")
     ap.add_argument("--surrogate-samples", type=int, default=10_000, help="paper: 10,000 state-action pairs")
+    ap.add_argument("--autonomous-missions", type=int, default=500,
+                    help="missions for the policy-only benchmark (no operator)")
     ap.add_argument("--no-ablations", action="store_true")
     ap.add_argument("--seed", type=int, default=0)
     args = ap.parse_args(argv)
@@ -61,6 +63,14 @@ def main(argv: list[str] | None = None) -> None:
     methods, fidelity = build_methods(Path(args.checkpoints), env, args.surrogate_samples, not args.no_ablations)
     print(f"surrogate fidelity (held-out R^2): {fidelity:.3f}")
     operators = make_operator_pool(args.operators, seed=args.seed)
+
+    autonomous = {}
+    seeds = list(range(90_000, 90_000 + args.autonomous_missions))
+    for m in methods:
+        if m.name in ("TD3", "PPO", "DDPG"):
+            autonomous[m.name] = evaluate_autonomous(env, m.agent, seeds)
+            print(f"autonomous {m.name}: success={autonomous[m.name]['success_rate']:.1%} "
+                  f"crash={autonomous[m.name]['crash_rate']:.1%}", flush=True)
 
     results = []
     for m in methods:
@@ -87,9 +97,10 @@ def main(argv: list[str] | None = None) -> None:
         "methods": [{k: v for k, v in r.items() if not k.startswith("_")} | {"operators": r["_operators"]}
                     for r in results],
         "significance_vs_trustx": tests,
+        "autonomous": autonomous,
     }
     (out / "evaluation.json").write_text(json.dumps(payload, indent=2, default=float))
-    (out / "table1.md").write_text(markdown_table(results, fidelity, tests))
+    (out / "table1.md").write_text(markdown_table(results, fidelity, tests) + autonomous_table(autonomous))
     print((out / "table1.md").read_text())
 
 
@@ -113,6 +124,16 @@ def markdown_table(results: list[dict], fidelity: float, tests: dict) -> str:
     lines.append(f"Surrogate decision-tree fidelity (held-out R^2, Eq. 19): {fidelity:.3f}")
     n = results[0]["missions"]
     lines.append(f"Each method: {n} missions, identical seeds and simulated operators.")
+    return "\n".join(lines) + "\n"
+
+
+def autonomous_table(autonomous: dict) -> str:
+    lines = ["", "Policy-only benchmark (no operator in the loop):", "",
+             "| Policy | Success (%) | 95% CI | Crash (%) | Mean steps |", "|---|---|---|---|---|"]
+    for name, r in autonomous.items():
+        lo, hi = r["success_ci"]
+        lines.append(f"| {name} | {100 * r['success_rate']:.1f} | {100 * lo:.1f}-{100 * hi:.1f} "
+                     f"| {100 * r['crash_rate']:.1f} | {r['mean_steps']:.0f} |")
     return "\n".join(lines) + "\n"
 
 
