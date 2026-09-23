@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trustx"
+version = "0.1.0"
+description = "TRUST-X: real-time explainable decision-making for RL-based UAV control"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "Hanzala Akbar" },
+  { name = "Inayat Arshad" },
+  { name = "Satwat Rahman" },
+  { name = "Fatima Aamir" },
+  { name = "Marrium Fatima" },
+  { name = "Haroon Ur Rashid Khan" },
+]
+keywords = ["reinforcement-learning", "explainable-ai", "uav", "td3", "shap", "trust"]
+dependencies = [
+  "numpy>=1.24",
+  "torch>=2.0",
+  "gymnasium>=0.29",
+  "scikit-learn>=1.3",
+  "matplotlib>=3.7",
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+trustx-train = "scripts.train:main"
+
+[tool.setuptools.packages.find]
+include = ["trustx*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
