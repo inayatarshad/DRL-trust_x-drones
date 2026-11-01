@@ -1,5 +1,6 @@
 # TRUST-X: Real-Time Explainable Decision-Making for RL-Based UAV Control
 
+This work was extended into **“TRUST-X: An Explainable Reinforcement Learning Framework for Adaptive Spatio-Temporal UAV Trajectory Optimization in Real-Time Remote Sensing.”**
 [![CI](https://github.com/inayatarshad/DRL-trust_x-drones/actions/workflows/ci.yml/badge.svg)](https://github.com/inayatarshad/DRL-trust_x-drones/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
